@@ -12,11 +12,15 @@ urlpatterns = [
     path('', home_view),
     path('login/', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
-    path('api/notes/', NotesListAPI.as_view()),
-    path('api/token/', TokenObtainPairView.as_view()),
-    path('api/token/refresh/', TokenRefreshView.as_view()),
-    path('api/create-user/', CreateUserView.as_view()),
+    path('api/notes/', NotesListAPI.as_view()), # List notes endpoint
+    path('api/token/', TokenObtainPairView.as_view()), # Get access token endpoint 
+    path('api/token/refresh/', TokenRefreshView.as_view()), # Get refresh token endpoint
+    path('api/create-user/', CreateUserView.as_view()), # Create new user ( Registeration ) endpoint
+
+    # Change password for user endpoint
     path('api/change-password/', ChangePasswordAPIView.as_view(), name="change_password"),
+
+    # Forget password / Make temporary password for user endpoint
     path('api/forget-password/', RequestChangePasswordAPI.as_view(), name="request_change_password")
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

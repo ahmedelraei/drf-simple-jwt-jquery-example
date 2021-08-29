@@ -51,12 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
         
 
-class ChangePasswordRequest(models.Model):
-    email = models.CharField(max_length=50)
-    otp = models.CharField(max_length=5)
-
 """ TODO:
-1- make registration for the model user and send link for the user email to change password 
+1- make registration for the model user and send link for the user email to change password
 2- redirect user to change password api with the following:
 	- old password
 	- new password

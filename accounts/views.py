@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, ChangePasswordSerializer, RequestChangePasswordSerializer
 from django.views.generic import View
-from .models import ChangePasswordRequest
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
@@ -20,6 +19,7 @@ class CreateUserView(CreateAPIView):
     serializer_class = UserSerializer
 
 class ChangePasswordAPIView(UpdateAPIView):
+        ''' Change password for user '''
         serializer_class = ChangePasswordSerializer
         model = get_user_model()
 
@@ -63,11 +63,13 @@ class RegisterView(View):
     
 
 class RequestChangePasswordAPI(UpdateAPIView):
+    ''' Make temporary password for user & Send reset link by email '''
+
     permission_classes = [
         permissions.AllowAny
     ]
     serializer_class = RequestChangePasswordSerializer
-    model = ChangePasswordRequest
+    model = get_user_model()
 
     def get_object(self, queryset=None):
         User = get_user_model()
@@ -94,6 +96,8 @@ class RequestChangePasswordAPI(UpdateAPIView):
                 'code': status.HTTP_200_OK,
                 'message': 'Reset link sent successfully',
             }
+
+            # Sending Reset Email
             change_pass_url = self.request.build_absolute_uri('/')[:-1] + reverse('change_password')
             msg = f'''
             Commercial Number: {user.commercial_registration_num}\n

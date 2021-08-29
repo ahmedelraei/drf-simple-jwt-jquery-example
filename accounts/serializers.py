@@ -9,7 +9,7 @@ UserModel = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-
+    ''' Serializing User Instance '''
     password = serializers.CharField()
         
     def create(self, validated_data):
@@ -49,11 +49,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
+    ''' Serializing old & new passwords '''
     model = UserModel
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
     confirm_password = serializers.CharField(required=True)
 
 class RequestChangePasswordSerializer(serializers.Serializer):
+    ''' Serializing User Email '''
     model = UserModel
     email = serializers.CharField(required=True)
