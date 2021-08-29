@@ -71,7 +71,6 @@ class RequestChangePasswordAPI(UpdateAPIView):
 
     def get_object(self, queryset=None):
         User = get_user_model()
-        obj = User.objects.all()
         return User
             
     def update(self, request, *args, **kwargs):
