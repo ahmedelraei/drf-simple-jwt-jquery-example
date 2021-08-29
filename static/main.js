@@ -47,8 +47,8 @@ function loadItems(){
     success: function(data){
         data.forEach(item => {
             $('#content').append(`
-                <div class="col-sm-3">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-md-3 mt-3 d-flex align-items-stretch">
+                    <div class="card shadow">
                         <div class="card-body">
                             <h5 class="card-title">${item.title}</h5>
                             <p class="card-text">${item.note}</p>
@@ -67,7 +67,7 @@ function loadItems(){
             } else {
                 window.location.replace("/login")
             }
-        }
+         }
     }
     });
 }
