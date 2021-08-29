@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 
+
 class CustomUserManager(BaseUserManager):
     """Manager For User Profiles"""
 
@@ -48,7 +49,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return String Representation of our user """
         return self.email
+        
 
+class ChangePasswordRequest(models.Model):
+    email = models.CharField(max_length=50)
+    otp = models.CharField(max_length=5)
 
 """ TODO:
 1- make registration for the model user and send link for the user email to change password 
