@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<form id="loginForm" method="POST">
-
-  <label for="user">User:</label><br>
-  <input type="text" id="user" name="user"><br>
-  <label for="password">Password:</label><br>
-  <input type="password" id="password" name="password">
-  <button type="submit">Login</button>
-</form>
-
+<div class="d-flex align-items-center min-vh-100">
+  <div class="container mt-5" style="max-width:50vh">
+    <form id="loginForm" method="POST">
+      <label for="user">User:</label><br>
+      <input class="form-control" type="text" id="user" name="user"><br>
+      <label for="password">Password:</label><br>
+      <input class="form-control" type="password" id="password" name="password">
+      <button class="btn btn-primary btn-block mt-3" type="submit">Login</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}

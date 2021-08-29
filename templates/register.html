@@ -2,17 +2,20 @@
 
 {% block content %}
 
-<form id="registerForm" method="POST">
-{% csrf_token %}
-  <label for="user">User:</label><br>
-  <input type="text" id="user" name="user"><br>
-  <label for="email">Email:</label><br>
-  <input type="text" id="email" name="email"><br>
-  <label for="email2">Confirm Email:</label><br>
-  <input type="text" id="email2" name="email2"><br>
-  <label for="password">Password:</label><br>
-  <input type="password" id="password" name="password">
-  <button type="submit">Register</button>
-</form>
+<div class="d-flex align-items-center min-vh-100">
+    <div class="container mt-5" style="max-width:50vh">
+        <form id="registerForm" method="POST">
+            <label for="user">User:</label><br>
+            <input class="form-control" type="text" id="user" name="user"><br>
+            <label for="email">Email:</label><br>
+            <input class="form-control" type="text" id="email" name="email"><br>
+            <label for="email2">Confirm Email:</label><br>
+            <input class="form-control" type="text" id="email2" name="email2"><br>
+            <label for="password">Password:</label><br>
+            <input class="form-control" type="password" id="password" name="password">
+            <button class="btn btn-primary btn-block mt-3" type="submit">Register</button>
+        </form>
+    </div>
+</div>
 
 {% endblock content %}

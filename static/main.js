@@ -64,8 +64,9 @@ function loadItems(){
             if(accessToken){
                 refreshToken();
                 loadItems()
+            } else {
+                window.location.replace("/login")
             }
-            window.location.replace("/login")
         }
     }
     });
@@ -98,3 +99,4 @@ $('#registerForm').submit(function(event){
             console.log(res)
         });
 })
+
