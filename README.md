@@ -1,0 +1,1 @@
+# Django Rest Framework Simple JWT With JQuery Example
