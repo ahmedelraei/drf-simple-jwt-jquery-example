@@ -4,20 +4,19 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from .utils import get_tokens_for_user
 
 UserModel = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    ''' Serializing User Instance '''
 
+    ''' Serializing User Instance '''
         
     def create(self, validated_data):
         commercial_num = validated_data['commercial_registration_num']
         password = UserModel.objects.make_random_password()
         email=validated_data['email']
-        change_pass_url = self.context['request'].build_absolute_uri('/')[:-1] + reverse('change_password')
 
         user = UserModel.objects.create_user(
             commercial_num=commercial_num,
@@ -25,7 +24,12 @@ class UserSerializer(serializers.ModelSerializer):
             email=email
         )
 
+        tokens = get_tokens_for_user(user)
+        change_pass_url = (self.context['request'].build_absolute_uri('/')[:-1] 
+                    + reverse('change_password') + '?access=' + tokens['access'])
+
         msg = f'''
+        Welcome!\n
         Commercial Number: {commercial_num}\n
         Password: {password}\n
         Change password => {change_pass_url}
