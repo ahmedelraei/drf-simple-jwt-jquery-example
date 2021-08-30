@@ -4,12 +4,23 @@ from rest_framework.generics import CreateAPIView, UpdateAPIView
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, ChangePasswordSerializer, RequestChangePasswordSerializer
+from .serializers import ObtainTokenPairSerializer, UserSerializer, ChangePasswordSerializer, RequestChangePasswordSerializer
 from django.views.generic import View
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 class CreateUserView(CreateAPIView):
     model = get_user_model()
@@ -19,7 +30,6 @@ class CreateUserView(CreateAPIView):
     serializer_class = UserSerializer
 
 class ChangePasswordAPIView(UpdateAPIView):
-        ''' Change password for user '''
         serializer_class = ChangePasswordSerializer
         model = get_user_model()
 
@@ -97,8 +107,12 @@ class RequestChangePasswordAPI(UpdateAPIView):
                 'message': 'Reset link sent successfully',
             }
 
+            tokens = get_tokens_for_user(user)
+            
             # Sending Reset Email
-            change_pass_url = self.request.build_absolute_uri('/')[:-1] + reverse('change_password')
+            change_pass_url = (self.request.build_absolute_uri('/')[:-1] 
+                    + reverse('change_password') + '?access=' + tokens['access'])
+
             msg = f'''
             Commercial Number: {user.commercial_registration_num}\n
             Password: {temp_pwd}\n
@@ -119,3 +133,7 @@ class RequestChangePasswordAPI(UpdateAPIView):
             return Response(response)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ObtainTokenPairView(TokenObtainPairView):
+    serializer_class = ObtainTokenPairSerializer

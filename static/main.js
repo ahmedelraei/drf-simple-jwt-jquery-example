@@ -78,22 +78,16 @@ $('#registerForm').submit(function(event){
     const user = $('#user').val();
     const email = $('#email').val();
     const email2 = $('#email2').val();
-    const password = $('#password').val();
     
     const form = {
         "commercial_registration_num": user,
         "email": email,
         "email2": email2,
-        "password": password
     }
     console.log(form)
     $.post('/api/create-user/',form)
         .done(res => {
-            auth = {
-                "commercial_registration_num": user,
-                "password": password,
-            }
-            getToken(auth)
+            window.location.replace("/login")
         })
         .fail(res => {
             console.log(res)

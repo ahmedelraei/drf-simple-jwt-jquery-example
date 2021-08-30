@@ -1,10 +1,17 @@
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
 from items.views import NotesListAPI, home_view
 from django.conf import settings
-from accounts.views import CreateUserView, ChangePasswordAPIView, LoginView, RegisterView, RequestChangePasswordAPI
+from accounts.views import (
+    CreateUserView, 
+    ChangePasswordAPIView, 
+    LoginView, 
+    RegisterView, 
+    RequestChangePasswordAPI,
+    ObtainTokenPairView
+    )
 
 
 urlpatterns = [
@@ -13,7 +20,7 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
     path('api/notes/', NotesListAPI.as_view()), # List notes endpoint
-    path('api/token/', TokenObtainPairView.as_view()), # Get access token endpoint 
+    path('api/token/', ObtainTokenPairView.as_view()), # Get access token endpoint 
     path('api/token/refresh/', TokenRefreshView.as_view()), # Get refresh token endpoint
     path('api/create-user/', CreateUserView.as_view()), # Create new user ( Registeration ) endpoint
 
